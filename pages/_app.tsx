@@ -4,7 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import WalletContextProvider from '../components/WalletContextProvider'
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <ChakraProvider>
+  return <ChakraProvider >
     <WalletContextProvider>
       <Component {...pageProps} />
     </WalletContextProvider>

@@ -10,7 +10,7 @@
 .AppHeader {
   height: 90px;
   display: flex;
-  background-color: black;
+  background-color: #222;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -28,6 +28,11 @@
   align-items: center;
   justify-content: flex-start;
   font-size: calc(10px + 2vmin);
+  background-color: #333;
   color: white;
   padding-top: 50px;
+}
+
+.HeadingText {
+  font-size: calc(25px + 2vmin);
 }

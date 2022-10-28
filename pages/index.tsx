@@ -15,24 +15,28 @@ export default function Home() {
   });
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} suppressHydrationWarning>
       <Head>
         <title>Local Notes</title>
         <meta name="description" content="Solana Local Notes" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppBar />
-      <Center>
+      <Center className={styles.AppBody}>
         <Box>
-          <Heading as="h1" size="l" color="black" ml={4} mt={8}>
+          <Heading  className={styles.HeadingText} as="h1" size="1" color="white" ml={4} mt={8}>
             Local Notes
           </Heading>
           {isGeolocationAvailable ? (
-          <Heading as="h2" size="l" color="black" ml={4} mt={8}>
-            Your location is:{coords?.latitude} {coords?.longitude}
+          <Heading as="h2" size="l" color="white" ml={4} mt={8}>
+            Your location is 
+            <Box color="#AA33AA">
+              Lat: {coords?.latitude} <br/>
+              Long: {coords?.longitude}
+            </Box>
           </Heading>) : 
           ( 
-          <Heading as="h2" size="l" color="black" ml={4} mt={8}>
+          <Heading as="h2" size="l" color="white" ml={4} mt={8}>
             Your location is not available
           </Heading>
           )}
