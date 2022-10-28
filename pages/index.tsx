@@ -3,6 +3,8 @@ import Head from "next/head";
 import { AppBar } from "../components/AppBar"
 import styles from "../styles/Home.module.css";
 import React, {useEffect, useState} from "react";
+import { NoteList } from "../components/NoteList";
+import { Form } from "../components/Form";
 
 export default function Home() {
   const [latitude, setLatitude] = useState(0);
@@ -43,6 +45,14 @@ export default function Home() {
             Your location is not available
           </Heading>
           )}
+          <Heading as="h1" size="l" color="white" ml={4} mt={8}>
+              Add a note
+          </Heading>
+          <Form latitude={latitude} longitude={longitude} />
+          <Heading as="h1" size="l" color="white" ml={4} mt={8}>
+              Notes around you
+          </Heading>
+          <NoteList />
         </Box>
       </Center>
     </div>
