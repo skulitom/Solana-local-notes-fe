@@ -13,22 +13,25 @@ import {
 import { useDisclosure } from "@chakra-ui/react";
 import { useConnection } from "@solana/wallet-adapter-react";
 
-export const NoteList: FC = () => {
+export interface NoteListProps {
+  latitude: number
+  longitude: number
+}
+
+export const NoteList: FC<NoteListProps> = (props: NoteListProps) => {
   const { connection } = useConnection();
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
+  const [ notes, setNotes] = useState<Note[]>([]);
+  const [ page, setPage] = useState(1);
+  const [ search, setSearch] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedNote, setSelectedNote] = useState<Note>(Note.mocks[0]);
 
   useEffect(() => {
-    NoteCoordinator.fetchPage(connection, page, 5, search, search !== "").then(
+    NoteCoordinator.fetchPage(connection, page, 5, props.latitude, props.longitude, search !== "").then(
       setNotes
     );
   }, [page, search]);
 
   const handleReviewSelected = (note: Note) => {
-    setSelectedNote(note);
     onOpen();
   };
 

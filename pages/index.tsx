@@ -9,11 +9,15 @@ import { Form } from "../components/Form";
 export default function Home() {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const [isLocated, setIsLocated] = useState(false);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function(position) {
       setLatitude(position?.coords?.latitude ? position.coords.latitude : 0);
       setLongitude(position?.coords?.longitude ? position.coords.longitude : 0);
+      if(position?.coords?.latitude || position?.coords?.longitude) {
+        setIsLocated(true)
+      }
     });
   }, [latitude, longitude]);
 
@@ -52,7 +56,10 @@ export default function Home() {
           <Heading as="h1" size="l" color="white" ml={4} mt={8}>
               Notes around you
           </Heading>
-          <NoteList />
+          { isLocated ?
+          <NoteList latitude={latitude} longitude={longitude}/>:
+          <p>Loading...</p>
+          }
         </Box>
       </Center>
     </div>

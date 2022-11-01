@@ -7,6 +7,8 @@ export class Note {
   text: string;
   latitude: number;
   longitude: number;
+  aproxLatitude: number;
+  aproxLongitude: number;
   creator: PublicKey;
 
   constructor(
@@ -14,12 +16,16 @@ export class Note {
     text: string,
     latitude: number,
     longitude: number,
-    creator: PublicKey
+    creator: PublicKey,
+    aproxLatitude: number = 0,
+    aproxLongitude: number = 0,
   ) {
     this.title = title;
     this.text = text;
     this.latitude = latitude;
     this.longitude = longitude;
+    this.aproxLatitude = aproxLatitude;
+    this.aproxLongitude = aproxLongitude;
     this.creator = creator;
   }
 
@@ -32,53 +38,24 @@ export class Note {
     )[0];
   }
 
-  static mocks: Note[] = [
-    new Note(
-      "The Dark Knight",
-      `The Dark Knight is a 2008 superhero film directed, produced, and co-written by Christopher Nolan. Batman, in his darkest hour, faces his greatest challenge yet: he must become the symbol of the opposite of the Batmanian order, the League of Shadows.`,
-      0,
-      0,
-      new PublicKey("EurMFhvwKScjv469XQoUm1Qj6PFJQoVwXYmdgeXCqg5m")
-    ),
-    new Note(
-      "The Dark Knight",
-      `The Dark Knight is a 2008 superhero film directed, produced, and co-written by Christopher Nolan. Batman, in his darkest hour, faces his greatest challenge yet: he must become the symbol of the opposite of the Batmanian order, the League of Shadows.`,
-      0,
-      0,
-      new PublicKey("EurMFhvwKScjv469XQoUm1Qj6PFJQoVwXYmdgeXCqg5m")
-    ),
-    new Note(
-      "The Dark Knight",
-      `The Dark Knight is a 2008 superhero film directed, produced, and co-written by Christopher Nolan. Batman, in his darkest hour, faces his greatest challenge yet: he must become the symbol of the opposite of the Batmanian order, the League of Shadows.`,
-      0,
-      0,
-      new PublicKey("EurMFhvwKScjv469XQoUm1Qj6PFJQoVwXYmdgeXCqg5m")
-    ),
-    new Note(
-      "The Dark Knight",
-      `The Dark Knight is a 2008 superhero film directed, produced, and co-written by Christopher Nolan. Batman, in his darkest hour, faces his greatest challenge yet: he must become the symbol of the opposite of the Batmanian order, the League of Shadows.`,
-      0,
-      0,
-      new PublicKey("EurMFhvwKScjv469XQoUm1Qj6PFJQoVwXYmdgeXCqg5m")
-    ),
-  ];
-
   borshInstructionSchema = borsh.struct([
     borsh.u8("variant"),
     borsh.str("title"),
     borsh.str("text"),
-    borsh.u32("latitude"),
-    borsh.u32("longitude"),
+    borsh.i32("latitude"),
+    borsh.i32("longitude"),
   ]);
 
   static borshAccountSchema = borsh.struct([
-    borsh.str("discriminator"),
     borsh.bool("initialized"),
     borsh.publicKey("creator"),
+    borsh.i32("latitude"),
+    borsh.i32("longitude"),
+    borsh.i32("aproxLatitude"),
+    borsh.i32("aproxLongitude"),
+    borsh.str("discriminator"),
     borsh.str("title"),
     borsh.str("text"),
-    borsh.u32("latitude"),
-    borsh.u32("longitude"),
   ]);
 
   serialize(): Buffer {
@@ -96,9 +73,10 @@ export class Note {
     }
 
     try {
-      const { title, text, latitude, longitude, creator } =
+      const { title, text, latitude, longitude, creator, aproxLatitude, aproxLongitude } =
         this.borshAccountSchema.decode(buffer);
-      return new Note(title, text, latitude, longitude, creator);
+        console.log(this.borshAccountSchema.decode(buffer));
+      return new Note(title, text, latitude, longitude, creator, aproxLatitude, aproxLongitude);
     } catch (e) {
       console.log("Deserialization error:", e);
       console.log(buffer);

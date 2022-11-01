@@ -32,7 +32,10 @@ export const Form: FC<FormProps> = (props: FormProps) => {
       return;
     }
 
-    const note = new Note(title, text, Math.floor(props.latitude * LOCATION_MULTIPLE), Math.floor(props.longitude * LOCATION_MULTIPLE), publicKey);
+    const latitude = Math.floor(props.latitude * LOCATION_MULTIPLE);
+    const longitude = Math.floor(props.longitude * LOCATION_MULTIPLE);
+
+    const note = new Note(title, text, latitude, longitude, publicKey);
     handleTransactionSubmit(note);
   };
 
